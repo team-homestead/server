@@ -38,7 +38,7 @@ public class Agency {
 
   @Enumerated(EnumType.STRING)
   @Column
-  private AgencyType type;
+  private enum AgencyType{}
 
   //Foreign Keys
 
