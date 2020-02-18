@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 import org.springframework.lang.NonNull;
 
 @Entity
@@ -66,5 +65,10 @@ public class Agency {
 
   public void setAgencyType(AgencyType agencyType) {
     this.agencyType = agencyType;
+  }
+
+  public enum AgencyType {
+    FOOD, SHELTER, CLOTHING, SUPPLIES;
+
   }
 }
