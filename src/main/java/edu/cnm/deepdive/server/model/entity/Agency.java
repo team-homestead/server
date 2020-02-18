@@ -39,7 +39,7 @@ public class Agency {
 
   @Enumerated(EnumType.STRING)
   @Column
-  private enum AgencyType{}
+  private AgencyType agencyType;
 
   //Foreign Keys
 
@@ -50,13 +50,21 @@ public class Agency {
 
 // Getters and Setters
 
+
   @NonNull
   public UUID getId() {
     return id;
   }
 
+  public AgencyType getAgencyType() {
+    return agencyType;
+  }
+
   public User getUser() {
     return user;
-    
+  }
+
+  public void setAgencyType(AgencyType agencyType) {
+    this.agencyType = agencyType;
   }
 }
