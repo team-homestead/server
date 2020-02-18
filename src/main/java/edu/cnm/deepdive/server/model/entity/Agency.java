@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
@@ -43,7 +44,19 @@ public class Agency {
   //Foreign Keys
 
   @OneToOne(fetch = FetchType.EAGER,
-      cascade = (CascadeType.DETACH, CascadeType.MERGE,  ))
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH})
+  @JoinColumn(name = "user_id")
+  private User user;
 
+// Getters and Setters
 
+  @NonNull
+  public UUID getId() {
+    return id;
+  }
+
+  public User getUser() {
+    return user;
+    
+  }
 }
