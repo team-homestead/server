@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
+import javax.naming.Name;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,13 +29,15 @@ import org.springframework.lang.NonNull;
   @Entity
   @Table(
       indexes = {
-          @Index(columnList = "contact_info"),
           @Index(columnList = "name"),
           @Index(columnList = "phone_number"),
           @Index(columnList = "email"),
       }
   )
+
   public class User {
+
+    // Entity Elements
 
     @NonNull
     @Id
@@ -42,27 +45,25 @@ import org.springframework.lang.NonNull;
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "user_id", columnDefinition = "CHAR(16) FOR BIT DATA",
         nullable = false, updatable = false)
-
     private UUID id;
 
 
     @NonNull
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false, updatable = false)
-    private Date created;
+    @Column(length = 1024, name = "name", nullable = false, updatable = true)
+    private String name;
 
 
-    @NonNull
-    @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
-    private Date updated;
+    @Column(name = "phone_number", nullable = true, updatable = true)
+    private long phoneNumber;
 
 
-    @NonNull
-    @Column(length = 4096, nullable = false, unique = true)
-    private String text;
+    @Column(length = 1024, name = "email", nullable = true, updatable = true)
+    private String email;
+
+
+
+
+    //  Getters and Setters
 
 
     @NonNull
@@ -71,30 +72,28 @@ import org.springframework.lang.NonNull;
     }
 
     @NonNull
-    public Date getCreated() {
-      return created;
+    public String getName() {
+      return name;
     }
 
-    @NonNull
-    public Date getUpdated() {
-      return updated;
+    public long getPhoneNumber() {
+      return phoneNumber;
     }
 
-    @NonNull
-    public String getText() {
-      return text;
+    public String getEmail() {
+      return email;
     }
 
-    public void setCreated(@NonNull Date created) {
-      this.created = created;
+    public void setName(@NonNull String name) {
+      this.name = name;
     }
 
-    public void setUpdated(@NonNull Date updated) {
-      this.updated = updated;
+    public void setPhoneNumber(long phoneNumber) {
+      this.phoneNumber = phoneNumber;
     }
 
-    public void setText(@NonNull String text) {
-      this.text = text;
+    public void setEmail(String email) {
+      this.email = email;
     }
   }
 
