@@ -1,9 +1,12 @@
 package edu.cnm.deepdive.server.model.entity;
 
+import edu.cnm.deepdive.server.view.FlatUser;
+import java.net.URI;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
+import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +24,9 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import org.springframework.hateoas.server.EntityLinks;
 
 
 
@@ -34,8 +39,9 @@ import org.springframework.lang.NonNull;
       }
   )
 
-  public class User {
+  public class User implements FlatUser {
 
+    private static EntityLinks entityLinks;
     // Entity Elements
 
     @NonNull
@@ -94,5 +100,27 @@ import org.springframework.lang.NonNull;
     public void setEmail(String email) {
       this.email = email;
     }
+
+
+    @Override
+    public URI getHref() {
+      return entityLinks.linkForItemResource(User.class, id).toUri();
+    }
+
+    public static EntityLinks getEntityLinks() {
+      return entityLinks;
+    }
+
+
+    @PostConstruct
+    private void init() {
+      entityLinks.toString();
+    }
+
+    @Autowired
+    private void setEntityLinks(EntityLinks entityLinks) {
+      User.entityLinks = entityLinks;
+    }
+
   }
 
