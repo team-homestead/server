@@ -19,7 +19,6 @@ import org.springframework.data.jpa.repository.Query;
 
     @Query(value = "SELECT * FROM sa.User",
         nativeQuery = true)
-
     default
       User findOrFail (UUID id){
       return findById(id).get();

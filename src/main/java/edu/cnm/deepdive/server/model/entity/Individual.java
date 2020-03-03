@@ -44,32 +44,31 @@ public class Individual {
   @Column(name = "family_unit_number", nullable = false)
   private int fun;
 
-
 //  Foreign Keys
 
-@OneToOne(fetch = FetchType.EAGER,
-    cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-@JoinColumn(name = "user_id")
-private User user;
-
-
+  @OneToOne(fetch = FetchType.EAGER,
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @JoinColumn(name = "user_id")
+  private User user;
 
   // Getters and Setters
+
 
   @NonNull
   public UUID getId() {
     return id;
   }
 
-  public int getFun() {
-    return fun;
+  public void setId(@NonNull UUID id) {
+    this.id = id;
   }
 
   public User getUser() {
+
     return user;
   }
 
-  public void setFun(int fun) {
-    this.fun = fun;
+  public void setUser(User user) {
+    this.user = user;
   }
 }
