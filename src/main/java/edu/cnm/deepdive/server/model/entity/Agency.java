@@ -45,7 +45,7 @@ public class Agency {
   @OneToOne(fetch = FetchType.EAGER,
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH})
   @JoinColumn(name = "user_id")
-  private User user;
+  private User1 user1;
 
 // Getters and Setters
 
@@ -59,8 +59,8 @@ public class Agency {
     return agencyType;
   }
 
-  public User getUser() {
-    return user;
+  public User1 getUser1() {
+    return user1;
   }
 
   public void setAgencyType(AgencyType agencyType) {

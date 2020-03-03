@@ -2,28 +2,15 @@ package edu.cnm.deepdive.server.model.entity;
 
 import edu.cnm.deepdive.server.view.FlatUser;
 import java.net.URI;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.hateoas.server.EntityLinks;
@@ -39,11 +26,12 @@ import org.springframework.hateoas.server.EntityLinks;
       }
   )
 
-  public class User implements FlatUser {
+  public class User1 implements FlatUser {
 
     private static EntityLinks entityLinks;
-    // Entity Elements
 
+
+    // Entity Elements
     @NonNull
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -69,8 +57,6 @@ import org.springframework.hateoas.server.EntityLinks;
 
 
     //  Getters and Setters
-
-
     @NonNull
     public UUID getId() {
       return id;
@@ -104,13 +90,12 @@ import org.springframework.hateoas.server.EntityLinks;
 
     @Override
     public URI getHref() {
-      return entityLinks.linkForItemResource(User.class, id).toUri();
-    }
+      return entityLinks.linkForItemResource(User1.class, id).toUri();
+      }
 
     public static EntityLinks getEntityLinks() {
       return entityLinks;
     }
-
 
     @PostConstruct
     private void init() {
@@ -119,7 +104,7 @@ import org.springframework.hateoas.server.EntityLinks;
 
     @Autowired
     private void setEntityLinks(EntityLinks entityLinks) {
-      User.entityLinks = entityLinks;
+      User1.entityLinks = entityLinks;
     }
 
   }

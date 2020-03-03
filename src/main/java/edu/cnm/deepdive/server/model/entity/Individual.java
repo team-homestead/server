@@ -1,24 +1,17 @@
 package edu.cnm.deepdive.server.model.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import java.util.Date;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
 
 @Entity
@@ -49,7 +42,7 @@ public class Individual {
   @OneToOne(fetch = FetchType.EAGER,
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "user_id")
-  private User user;
+  private User1 user1;
 
   // Getters and Setters
 
@@ -63,12 +56,12 @@ public class Individual {
     this.id = id;
   }
 
-  public User getUser() {
+  public User1 getUser1() {
 
-    return user;
+    return user1;
   }
 
-  public void setUser(User user) {
-    this.user = user;
+  public void setUser1(User1 user1) {
+    this.user1 = user1;
   }
 }
