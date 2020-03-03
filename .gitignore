@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+/homestead_db
+derby.log
