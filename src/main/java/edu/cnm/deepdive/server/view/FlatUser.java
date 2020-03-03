@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.net.URI;
 import java.util.UUID;
 import org.springframework.lang.NonNull;
-import java.util.
-
 
 @JsonPropertyOrder()
  public interface FlatUser {
@@ -16,8 +14,6 @@ import java.util.
 
   @NonNull
   String getName();
-
-
 
   long getPhoneNumber();
 
