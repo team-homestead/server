@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ServiceRepository extends JpaRepository<Service, UUID> {
 
-  Iterable<Service> getAllByNameContainsOrderByNameAsc(String fragment);
+  // Iterable<Service> getAllByNameContainsOrderByNameAsc(String fragment);
+  // Iterable<Service> findAllByOrderName();
 
-  Iterable<Service> findAllByOrderName();
+  Iterable<Service> findAllByFoodContainsOrderByFoodAsc (String fragment);
+
 }

@@ -40,31 +40,7 @@ public class ServiceController {
     return ResponseEntity.created(service.gerHref()).body(service);
   }
 
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Service> get() {
-    return repository.findAllByOrderName();
-  }
-
-/*  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Service> search(@RequestParam("q") String fragment) {
-    if (fragment.length() < 3) {
-      thow new SearchTermTooShortException();
-    }
-    return repository.getAllByNameContainsOrderByNameAsc(fragment);
-  }*/
-
- /* @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Service get(@PathVariable UUID id) {
     return repository.findById(id).get();
-  } */
-
-  /*@DeleteMapping(value = "/{id}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable UUID id) {
-    repository.findById(id).ifPresent(repository::delete);
-  }*/
-
-
-
-
-}
+  }}

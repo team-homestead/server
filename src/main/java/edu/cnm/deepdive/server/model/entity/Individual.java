@@ -42,7 +42,7 @@ public class Individual {
   @OneToOne(fetch = FetchType.EAGER,
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "user_id")
-  private User1 user1;
+  private User user;
 
   // Getters and Setters
 
@@ -56,12 +56,12 @@ public class Individual {
     this.id = id;
   }
 
-  public User1 getUser1() {
+  public User getUser() {
 
-    return user1;
+    return user;
   }
 
-  public void setUser1(User1 user1) {
-    this.user1 = user1;
+  public void setUser(User user) {
+    this.user = user;
   }
 }

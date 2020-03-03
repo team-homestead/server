@@ -17,16 +17,17 @@ import org.springframework.hateoas.server.EntityLinks;
 
 
 
+  @SuppressWarnings("JpaDataSourceORMInspection")
   @Entity
   @Table(
+      name = "user_profile",
       indexes = {
           @Index(columnList = "name"),
           @Index(columnList = "phone_number"),
           @Index(columnList = "email"),
       }
   )
-
-  public class User1 implements FlatUser {
+  public class User implements FlatUser {
 
     private static EntityLinks entityLinks;
 
@@ -90,7 +91,7 @@ import org.springframework.hateoas.server.EntityLinks;
 
     @Override
     public URI getHref() {
-      return entityLinks.linkForItemResource(User1.class, id).toUri();
+      return entityLinks.linkForItemResource(User.class, id).toUri();
       }
 
     public static EntityLinks getEntityLinks() {
@@ -104,7 +105,7 @@ import org.springframework.hateoas.server.EntityLinks;
 
     @Autowired
     private void setEntityLinks(EntityLinks entityLinks) {
-      User1.entityLinks = entityLinks;
+      User.entityLinks = entityLinks;
     }
 
   }

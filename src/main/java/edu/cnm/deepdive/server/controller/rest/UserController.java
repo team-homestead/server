@@ -1,6 +1,6 @@
 package edu.cnm.deepdive.server.controller.rest;
 
-import edu.cnm.deepdive.server.model.entity.User1;
+import edu.cnm.deepdive.server.model.entity.User;
 import edu.cnm.deepdive.server.service.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Component
 @RestController
 @RequestMapping("/users")
-@ExposesResourceFor(User1.class)
+@ExposesResourceFor(User.class)
 public class UserController {
 
   private final UserRepository userRepository;
@@ -29,9 +29,9 @@ public class UserController {
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<User1> post(@RequestBody User1 user1) {
-    userRepository.save(user1);
-    return ResponseEntity.created(user1.getHref()).body(user1);
+  public ResponseEntity<User> post(@RequestBody User user) {
+    userRepository.save(user);
+    return ResponseEntity.created(user.getHref()).body(user);
 
   }
 /**
