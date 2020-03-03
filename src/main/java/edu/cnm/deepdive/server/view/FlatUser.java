@@ -5,17 +5,28 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.net.URI;
 import java.util.UUID;
 import org.springframework.lang.NonNull;
+import java.util.
 
 
-  @JsonPropertyOrder({"id", "href"})
+@JsonPropertyOrder()
+ public interface FlatUser {
 
-  public interface FlatUser {
+  @NonNull
+  UUID getId();
 
-   @NonNull
-   UUID getId();
+  @NonNull
+  String getName();
 
-   @NonNull
-   URI getHref();
-  }
+
+
+  long getPhoneNumber();
+
+  @NonNull
+  public String getEmail();
+
+  URI getHref();
+
+
+}
 
 
