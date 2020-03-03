@@ -1,6 +1,5 @@
 package edu.cnm.deepdive.server.controller.exception;
 
-<<<<<<< HEAD
 import java.util.NoSuchElementException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,9 +20,5 @@ public class ControllerExceptionHandler {
   @ExceptionHandler(IllegalArgumentException.class)
   @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Invalid request content or parameters")
   public void badRequest() {}
-=======
-public class ControllerExceptionHandler {
 
-
->>>>>>> origin/master
 }
