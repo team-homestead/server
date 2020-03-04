@@ -37,7 +37,7 @@ public class ServiceController {
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Service> post(@RequestBody Service service) {
     repository.save(service);
-    return ResponseEntity.created(service.gerHref()).body(service);
+    return ResponseEntity.created(service.getHref()).body(service);
   }
 
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

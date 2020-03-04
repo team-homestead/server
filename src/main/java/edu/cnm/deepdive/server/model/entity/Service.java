@@ -147,7 +147,7 @@ import org.springframework.stereotype.Component;
     }
 
 
-  public URI gerHref() {
+  public URI getHref() {
     return entityLinks.linkForItemResource(Service.class, id).toUri();
   }
 
