@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/service")
+@RequestMapping("/services")
 @ExposesResourceFor(Service.class)
 public class ServiceController {
 
@@ -40,7 +40,23 @@ public class ServiceController {
     return ResponseEntity.created(service.getHref()).body(service);
   }
 
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<Service> get() {
+    return repository.findAllByOrderName();
+  }
+
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Service get(@PathVariable UUID id) {
     return repository.findById(id).get();
-  }}
+  }
+
+   @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<Service> search(@RequestParam("q") String fragment) {
+    if (fragment.length() < 3) {
+      throw new SearchTermTooShortException();
+    }
+    return repository.getAllByNameContainsOrderByNameAsc(fragment);
+  }
+
+
+}
