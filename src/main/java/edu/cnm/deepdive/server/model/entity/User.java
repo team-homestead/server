@@ -14,99 +14,98 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.hateoas.server.EntityLinks;
+import org.springframework.stereotype.Component;
 
 
-
-  @SuppressWarnings("JpaDataSourceORMInspection")
-  @Entity
-  @Table(
-      name = "user_profile",
-      indexes = {
-          @Index(columnList = "name"),
-          @Index(columnList = "phone_number"),
-          @Index(columnList = "email"),
-      }
-  )
-  public class User implements FlatUser {
-
-    private static EntityLinks entityLinks;
-
-
-    // Entity Elements
-    @NonNull
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "user_id", columnDefinition = "CHAR(16) FOR BIT DATA",
-        nullable = false, updatable = false)
-    private UUID id;
-
-
-    @NonNull
-    @Column(length = 1024, name = "name", nullable = false, updatable = true)
-    private String name;
-
-
-    @Column(name = "phone_number", nullable = true, updatable = true)
-    private long phoneNumber;
-
-
-    @Column(length = 1024, name = "email", nullable = true, updatable = true)
-    private String email;
-
-
-
-
-    //  Getters and Setters
-    @NonNull
-    public UUID getId() {
-      return id;
+@Component
+@SuppressWarnings("JpaDataSourceORMInspection")
+@Entity
+@Table(
+    name = "user_profile",
+    indexes = {
+        @Index(columnList = "name"),
+        @Index(columnList = "phone_number"),
+        @Index(columnList = "email"),
     }
+)
+public class User implements FlatUser {
 
-    @NonNull
-    public String getName() {
-      return name;
-    }
-
-    public long getPhoneNumber() {
-      return phoneNumber;
-    }
-
-    public String getEmail() {
-      return email;
-    }
-
-    public void setName(@NonNull String name) {
-      this.name = name;
-    }
-
-    public void setPhoneNumber(long phoneNumber) {
-      this.phoneNumber = phoneNumber;
-    }
-
-    public void setEmail(String email) {
-      this.email = email;
-    }
+  private static EntityLinks entityLinks;
 
 
-    @Override
-    public URI getHref() {
-      return entityLinks.linkForItemResource(User.class, id).toUri();
-      }
+  // Entity Elements
+  @NonNull
+  @Id
+  @GeneratedValue(generator = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "uuid2")
+  @Column(name = "user_id", columnDefinition = "CHAR(16) FOR BIT DATA",
+      nullable = false, updatable = false)
+  private UUID id;
 
-    public static EntityLinks getEntityLinks() {
-      return entityLinks;
-    }
 
-    @PostConstruct
-    private void init() {
-      entityLinks.toString();
-    }
+  @NonNull
+  @Column(length = 1024, name = "name", nullable = false, updatable = true)
+  private String name;
 
-    @Autowired
-    private void setEntityLinks(EntityLinks entityLinks) {
-      User.entityLinks = entityLinks;
-    }
 
+  @Column(name = "phone_number", nullable = true, updatable = true)
+  private long phoneNumber;
+
+
+  @Column(length = 1024, name = "email", nullable = true, updatable = true)
+  private String email;
+
+
+  //  Getters and Setters
+  @NonNull
+  public UUID getId() {
+    return id;
   }
+
+  @NonNull
+  public String getName() {
+    return name;
+  }
+
+  public long getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setName(@NonNull String name) {
+    this.name = name;
+  }
+
+  public void setPhoneNumber(long phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+
+  @Override
+  public URI getHref() {
+    return entityLinks.linkForItemResource(User.class, id).toUri();
+  }
+
+  public static EntityLinks getEntityLinks() {
+    return entityLinks;
+  }
+
+  @PostConstruct
+  private void init() {
+    entityLinks.toString();
+  }
+
+  @Autowired
+  private void setEntityLinks(EntityLinks entityLinks) {
+    User.entityLinks = entityLinks;
+  }
+
+}
 

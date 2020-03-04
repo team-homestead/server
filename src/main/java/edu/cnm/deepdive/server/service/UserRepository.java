@@ -11,17 +11,12 @@ import org.springframework.data.jpa.repository.Query;
 
   {
 
-    Iterable<User> getAllByIdOrderByIdDesc ();
+    Iterable<User> getAllByIdOrderByIdDesc(UUID id);
 
     Iterable<User> getAllByNameContainsOrderByNameAsc (String fragment);
 
-
-
-
-
-    @Query(value = "SELECT * FROM sa.User",
-        nativeQuery = true)
     default User findOrFail (UUID id){
       return findById(id).get();
     }
+
   }
