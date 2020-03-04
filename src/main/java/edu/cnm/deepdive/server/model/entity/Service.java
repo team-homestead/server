@@ -74,15 +74,10 @@ import org.springframework.stereotype.Component;
 
 //  Foreign Keys
 
-      @ManyToOne(fetch = FetchType.EAGER,
-        cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "individual_id")
-    private Service serviceA;
-
-    @ManyToOne(fetch = FetchType.EAGER,
+  @ManyToOne(fetch = FetchType.EAGER,
         cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "agency_id")
-    private Service serviceB;
+    private Agency agency;
 
 
 
@@ -130,21 +125,13 @@ import org.springframework.stereotype.Component;
       this.supplies = supplies;
     }
 
-    public Service getServiceA() {
-      return serviceA;
-    }
+  public Agency getAgency() {
+    return agency;
+  }
 
-    public void setServiceA(Service serviceA) {
-      this.serviceA = serviceA;
-    }
-
-    public Service getServiceB() {
-      return serviceB;
-    }
-
-    public void setServiceB(Service serviceB) {
-      this.serviceB = serviceB;
-    }
+  public void setAgency(Agency agency) {
+    this.agency = agency;
+  }
 
 
   public URI getHref() {
