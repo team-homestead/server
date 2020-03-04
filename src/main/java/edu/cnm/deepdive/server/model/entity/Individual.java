@@ -13,8 +13,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Controller;
 
 @Entity
+@Controller
 @Table(
     indexes = {
         @Index(columnList = "individual_id")

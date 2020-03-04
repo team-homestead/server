@@ -1,7 +1,10 @@
 package edu.cnm.deepdive.server.model.entity;
 
 
+import edu.cnm.deepdive.server.view.FlatAgency;
+import java.net.URI;
 import java.util.UUID;
+import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +18,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 
+@Component
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(
     indexes = {
@@ -24,14 +32,16 @@ import org.springframework.lang.NonNull;
     }
 )
 
-public class Agency {
+public class Agency implements FlatAgency {
+
+  private static EntityLinks entityLinks;
 
   //Entity Elements
 
   @NonNull
   @Id
   @GeneratedValue(generator = "uuid2")
-  @GenericGenerator(name = "uuid", strategy = "uuid2")
+  @GenericGenerator(name = "uuid2", strategy = "uuid2")
   @Column(name = "agency_id", columnDefinition = "CHAR(16) FOR BIT DATA",
       nullable = false, updatable = false)
   private UUID id;
@@ -71,4 +81,20 @@ public class Agency {
     FOOD, SHELTER, CLOTHING, SUPPLIES;
 
   }
+
+  @Override
+  public URI getHref() {
+    return entityLinks.linkForItemResource(Agency.class, id).toUri();
+  }
+
+  public static EntityLinks getEntityLinks() {
+    return entityLinks;
+  }
+
+
+  @PostConstruct
+  private void init() { entityLinks.toString(); }
+
+  @Autowired
+  private void setEntityLinks(EntityLinks entityLinks) { Agency.entityLinks = entityLinks; }
 }
