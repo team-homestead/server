@@ -3,6 +3,7 @@ package edu.cnm.deepdive.server.controller.rest;
 import edu.cnm.deepdive.server.model.entity.Agency;
 import edu.cnm.deepdive.server.service.AgencyRepository;
 import edu.cnm.deepdive.server.service.ServiceRepository;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
@@ -23,7 +24,7 @@ public class AgencyController {
   private final AgencyRepository agencyRepository;
 
   @Autowired
-  public AgencyController(AgencyRepository agencyRepository, ServiceRepository serviceRepository) {
+  public AgencyController(AgencyRepository agencyRepository) {
     this.agencyRepository = agencyRepository;
   }
 
@@ -31,12 +32,7 @@ public class AgencyController {
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Agency> post(@RequestBody Agency agency) {
     agencyRepository.save(agency);
-    return ResponseEntity.created((agency.getHref()).body(agency);
-  }
-
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Iterable<Agency> get() {
-    return agencyRepository.getAllByOrderByCreatedDesc();
+    return ResponseEntity.created(agency.getHref()).body(agency);
   }
 
 }

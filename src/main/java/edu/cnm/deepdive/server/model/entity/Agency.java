@@ -24,7 +24,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
-@SuppressWarnings("JpaDataSourceORMInspection")
 @Entity
 @Table(
     indexes = {

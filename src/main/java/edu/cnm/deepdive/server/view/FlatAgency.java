@@ -9,7 +9,10 @@ import org.springframework.lang.NonNull;
 @JsonPropertyOrder({"id"})
 public interface FlatAgency {
 
-  UUID
+  @NonNull
+  UUID getId();
+
+  URI getHref();
 
 }
 
