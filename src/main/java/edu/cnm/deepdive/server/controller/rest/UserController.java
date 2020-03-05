@@ -34,10 +34,5 @@ public class UserController {
     return ResponseEntity.created(user.getHref()).body(user);
 
   }
-/**
- * name, phone, email get.  attach an element later.  delete (+ put or patch as an update) phone or
- * email.
- */
-
 }
 
