@@ -2,8 +2,6 @@ package edu.cnm.deepdive.server.controller.rest;
 
 import edu.cnm.deepdive.server.model.entity.Agency;
 import edu.cnm.deepdive.server.service.AgencyRepository;
-import edu.cnm.deepdive.server.service.ServiceRepository;
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.MediaType;
