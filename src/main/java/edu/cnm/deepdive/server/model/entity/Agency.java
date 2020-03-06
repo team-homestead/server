@@ -31,6 +31,17 @@ import org.springframework.stereotype.Component;
     }
 )
 
+
+
+
+
+
+
+
+
+
+
+
 public class Agency implements FlatAgency {
 
   private static EntityLinks entityLinks;
@@ -76,9 +87,12 @@ public class Agency implements FlatAgency {
     this.agencyType = agencyType;
   }
 
-  public enum AgencyType {
-    FOOD, SHELTER, CLOTHING, SUPPLIES;
 
+  /**
+   * Enum class, AgencyType, is a nested class
+   */
+  public enum AgencyType {
+    GOVERNMENT, PUBLIC, RELIGIOUS, OTHER;
   }
 
   @Override
