@@ -10,9 +10,9 @@ public interface AgencyRepository extends JpaRepository<Agency, UUID> {
 
   Iterable<Agency> getAllByIdContainsOrderById(UUID id);
 
-  Iterable<Agency> findAllByOrderByAgencyType();
+  Iterable<Agency> findAllByOrderByType();
 
-  Iterable<Agency> getAllByAgencyTypeContainsOrderByAgencyTypeAsc(String fragment);
+  Iterable<Agency> getAllByTypeContainsOrderByTypeAsc(String fragment);
 
   default Agency findOrFail(UUID id) {
     return findById(id).get();

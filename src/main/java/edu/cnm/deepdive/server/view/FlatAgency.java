@@ -6,7 +6,7 @@ import java.net.URI;
 import java.util.UUID;
 import org.springframework.lang.NonNull;
 
-@JsonPropertyOrder({"id", "food", "shelter", "clothing", "supplies"})
+@JsonPropertyOrder({"id", "government", "public", "religious"})
 public interface FlatAgency {
 
 

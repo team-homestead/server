@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.server.model.entity;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import edu.cnm.deepdive.server.view.FlatAgency;
 import java.net.URI;
 import java.util.UUID;
@@ -54,6 +55,7 @@ public class Agency implements FlatAgency {
   @OneToOne(fetch = FetchType.EAGER,
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH})
   @JoinColumn(name = "user_id")
+  @JsonSerialize(contentAs = FlatAgency.class)
   private User user;
 
 // Getters and Setters
@@ -76,11 +78,13 @@ public class Agency implements FlatAgency {
     this.agencyType = agencyType;
   }
 
+
   public enum AgencyType {
-    CLOTHING, FOOD, SHELTER, SUPPLIES;
+    GOVERNMENT, PUBLIC, RELIGIOUS;
 
   }
-  
+
+
 
   @Override
   public URI getHref() {
