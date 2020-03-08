@@ -6,7 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AgencyRepository extends JpaRepository<Agency, UUID> {
 
-  Iterable<Agency> getAllByTypeOrderByTypeDesc(UUID id);
+  Iterable<Agency> findAllByOrderById();
+
+  Iterable<Agency> getAllByIdContainsOrderById(UUID id);
+
+  Iterable<Agency> findAllByOrderByAgencyType();
+
+  Iterable<Agency> getAllByAgencyTypeContainsOrderByAgencyTypeAsc(String fragment);
 
   default Agency findOrFail(UUID id) {
     return findById(id).get();

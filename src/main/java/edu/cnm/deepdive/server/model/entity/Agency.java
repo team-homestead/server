@@ -77,9 +77,10 @@ public class Agency implements FlatAgency {
   }
 
   public enum AgencyType {
-    FOOD, SHELTER, CLOTHING, SUPPLIES;
+    CLOTHING, FOOD, SHELTER, SUPPLIES;
 
   }
+  
 
   @Override
   public URI getHref() {
