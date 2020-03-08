@@ -6,8 +6,11 @@ package edu.cnm.deepdive.server.service;
     import org.springframework.data.jpa.repository.JpaRepository;
     import org.springframework.data.jpa.repository.Query;
 
+
 public interface IndividualRepository extends JpaRepository<Individual, UUID> {
 
+
+  /** Iterations by id and fun. **/
   Iterable<Individual> getAllByIdOrderByIdDesc(UUID id);
 
   Iterable<Individual> getAllByFunContainsOrderByFun(Integer fragment);
@@ -15,6 +18,5 @@ public interface IndividualRepository extends JpaRepository<Individual, UUID> {
   default Individual findOrFail(UUID id) {
 
     return findById(id).get();
-
   }
 }

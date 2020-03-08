@@ -3,6 +3,7 @@ package edu.cnm.deepdive.server.model.entity;
 
 import edu.cnm.deepdive.server.view.FlatAgency;
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
@@ -56,6 +58,11 @@ public class Agency implements FlatAgency {
       nullable = false, updatable = false)
   private UUID id;
 
+
+
+
+
+
   @Enumerated(EnumType.STRING)
   @Column
   private AgencyType agencyType;
@@ -67,7 +74,15 @@ public class Agency implements FlatAgency {
   @JoinColumn(name = "user_id")
   private User user;
 
-// Getters and Setters
+  /** Archie, I would like to this to complete connection to Service controller
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "agency",
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @JoinColumn(name = "service_id")
+  private Service service;
+   Uncertain about redline in  "private Service service".
+  **/
+
+  // Getters and Setters
 
 
   @NonNull
