@@ -80,7 +80,7 @@ public class Agency implements FlatAgency {
 
 
   public enum AgencyType {
-    GOVERNMENT, PUBLIC, RELIGIOUS;
+    GOVERNMENT, OTHER, PUBLIC, RELIGIOUS;
 
   }
 
