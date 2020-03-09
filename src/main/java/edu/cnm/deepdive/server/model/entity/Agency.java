@@ -47,7 +47,7 @@ public class Agency implements FlatAgency {
       nullable = false, updatable = false)
   private UUID id;
 
-  @Enumerated(EnumType.STRING)
+  @Enumerated(EnumType.ORDINAL)
   @Column
   private AgencyType agencyType;
 
@@ -90,10 +90,6 @@ public class Agency implements FlatAgency {
   private void setEntityLinks(EntityLinks entityLinks) {
     Agency.entityLinks = entityLinks;
   }
-
-
-
-
 
 
   @Override

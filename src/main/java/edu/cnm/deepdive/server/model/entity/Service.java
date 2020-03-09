@@ -60,9 +60,9 @@ public class Service implements FlatService {
       nullable = false, updatable = false)
   private UUID id;
 
-  //  @Enumerated(EnumType.ORDINAL)
- // @Column
- // private ServiceType serviceType;
+   @Enumerated(EnumType.ORDINAL)
+   @Column
+   private ServiceType serviceType;
 
 
   @ManyToOne(fetch = FetchType.EAGER,
@@ -93,13 +93,13 @@ public class Service implements FlatService {
     this.agency = agency;
   }
 
-  // public ServiceType getServiceType() {
-    // return serviceType;
- //  }
+  public ServiceType getServiceType() {
+    return serviceType;
+ }
 
-//  public void setServiceType(ServiceType serviceType) {
-////    this.serviceType = serviceType;
-////  }
+//public void setServiceType(ServiceType serviceType) {
+//this.serviceType = serviceType;
+//}
 
   /**
    * Entity Setters and Getters.  Updateable fields have setters.
