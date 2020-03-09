@@ -1,3 +1,4 @@
+
 package edu.cnm.deepdive.server.model.entity;
 
 
@@ -53,7 +54,7 @@ public class Agency implements FlatAgency {
   //Foreign Keys
 
   @OneToOne(fetch = FetchType.EAGER,
-      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH})
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "user_id")
   @JsonSerialize(contentAs = FlatAgency.class)
   private User user;
@@ -85,6 +86,15 @@ public class Agency implements FlatAgency {
   }
 
 
+  @Autowired
+  private void setEntityLinks(EntityLinks entityLinks) {
+    Agency.entityLinks = entityLinks;
+  }
+
+
+
+
+
 
   @Override
   public URI getHref() {
@@ -99,6 +109,4 @@ public class Agency implements FlatAgency {
   @PostConstruct
   private void init() { entityLinks.toString(); }
 
-  @Autowired
-  private void setEntityLinks(EntityLinks entityLinks) { Agency.entityLinks = entityLinks; }
 }

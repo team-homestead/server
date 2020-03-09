@@ -57,12 +57,12 @@ public class Service implements FlatService {
   @GeneratedValue(generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
   @Column(name = "service_id", columnDefinition = "CHAR(16) FOR BIT DATA",
-      nullable = false, updatable = true)
+      nullable = false, updatable = false)
   private UUID id;
 
-  @Enumerated(EnumType.ORDINAL)
-  @Column
-  private ServiceType serviceType;
+  //  @Enumerated(EnumType.ORDINAL)
+ // @Column
+ // private ServiceType serviceType;
 
 
   @ManyToOne(fetch = FetchType.EAGER,
@@ -93,13 +93,13 @@ public class Service implements FlatService {
     this.agency = agency;
   }
 
-  public ServiceType getServiceType() {
-    return serviceType;
-  }
+  // public ServiceType getServiceType() {
+    // return serviceType;
+ //  }
 
-  public void setServiceType(ServiceType serviceType) {
-    this.serviceType = serviceType;
-  }
+//  public void setServiceType(ServiceType serviceType) {
+////    this.serviceType = serviceType;
+////  }
 
   /**
    * Entity Setters and Getters.  Updateable fields have setters.
@@ -124,7 +124,7 @@ public class Service implements FlatService {
 
   @Override
   public URI getHref() {
-    return entityLinks.linkForItemResource(User.class, id).toUri();
+    return entityLinks.linkForItemResource(Service.class, id).toUri();
   }
 
   /**

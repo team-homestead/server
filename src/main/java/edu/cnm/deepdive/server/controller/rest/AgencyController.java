@@ -2,6 +2,7 @@ package edu.cnm.deepdive.server.controller.rest;
 
 import edu.cnm.deepdive.server.controller.exception.SearchTermTooShortException;
 import edu.cnm.deepdive.server.model.entity.Agency;
+import edu.cnm.deepdive.server.model.entity.Agency.AgencyType;
 import edu.cnm.deepdive.server.service.AgencyRepository;
 import java.util.Set;
 import java.util.UUID;
