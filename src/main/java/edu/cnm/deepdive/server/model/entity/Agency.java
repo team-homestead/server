@@ -5,6 +5,7 @@ package edu.cnm.deepdive.server.model.entity;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import edu.cnm.deepdive.server.view.FlatAgency;
 import edu.cnm.deepdive.server.view.FlatService;
+import edu.cnm.deepdive.server.view.FlatUser;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Iterator;
@@ -35,14 +36,9 @@ import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Component
 @Entity
-@Table(
-    indexes = {
-        @Index(columnList = "agencyId")
-    }
-)
-
 public class Agency implements FlatAgency {
 
   private static EntityLinks entityLinks;
@@ -53,7 +49,7 @@ public class Agency implements FlatAgency {
   @Id
   @GeneratedValue(generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  @Column(name = "agencyId", columnDefinition = "CHAR(16) FOR BIT DATA",
+  @Column(name = "agency_id", columnDefinition = "CHAR(16) FOR BIT DATA",
       nullable = false, updatable = false)
   private UUID id;
 
@@ -62,60 +58,63 @@ public class Agency implements FlatAgency {
 
   //Foreign Keys
 
-  @OneToOne(fetch = FetchType.EAGER,
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "agency",
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinColumn(name = "userId")
-  @JsonSerialize(contentAs = FlatAgency.class)
-  private User user;
+  @OrderBy("name ASC")
+  @JsonSerialize(contentAs = FlatUser.class)
+  private List<User> users = new LinkedList<>();
 
   @NonNull
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "agency",
-      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinColumn (name = "serviceId")
+      cascade = CascadeType.ALL)
   @JsonSerialize(contentAs = FlatService.class)
   private List<Service> services = new LinkedList<>();
-
 
 // Getters and Setters
 
 
-    @NonNull
-    public UUID getId() {
-      return id;
-    }
-
-    public AgencyType getAgencyType() {
-      return agencyType;
-    }
-
-    public User getUser() {
-      return user;
-    }
-
-    public void setAgencyType(AgencyType agencyType) {
-      this.agencyType = agencyType;
-    }
-
-
-    @Autowired
-    private void setEntityLinks(EntityLinks entityLinks) {
-      Agency.entityLinks = entityLinks;
-    }
-
-
-    @Override
-    public URI getHref() {
-      return entityLinks.linkForItemResource(Agency.class, id).toUri();
-    }
-
-
-    @PostConstruct
-    private void init() {
-      entityLinks.toString();
-    }
-
-    public enum AgencyType {
-      GOVERNMENT, OTHER, PUBLIC, RELIGIOUS;
-
-    }
+  @NonNull
+  public UUID getId() {
+    return id;
   }
+
+  public AgencyType getAgencyType() {
+    return agencyType;
+  }
+
+  public void setAgencyType(AgencyType agencyType) {
+    this.agencyType = agencyType;
+  }
+
+  public List<User> getUsers() {
+    return users;
+  }
+
+  @NonNull
+  public List<Service> getServices() {
+    return services;
+  }
+
+  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+  @Autowired
+  private void setEntityLinks(EntityLinks entityLinks) {
+    Agency.entityLinks = entityLinks;
+  }
+
+
+  @Override
+  public URI getHref() {
+    return entityLinks.linkForItemResource(Agency.class, id).toUri();
+  }
+
+
+  @PostConstruct
+  private void init() {
+    entityLinks.toString();
+  }
+
+  public enum AgencyType {
+    GOVERNMENT, OTHER, PUBLIC, RELIGIOUS;
+
+  }
+}

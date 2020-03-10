@@ -1,14 +1,20 @@
 package edu.cnm.deepdive.server.model.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import edu.cnm.deepdive.server.view.FlatAgency;
 import edu.cnm.deepdive.server.view.FlatUser;
 import java.net.URI;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +54,7 @@ public class User implements FlatUser {
   @Id
   @GeneratedValue(generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  @Column(name = "userId", columnDefinition = "CHAR(16) FOR BIT DATA",
+  @Column(name = "user_id", columnDefinition = "CHAR(16) FOR BIT DATA",
       nullable = false, updatable = false)
   private UUID id;
 
@@ -56,28 +62,40 @@ public class User implements FlatUser {
    * User name is non-nullable, and updateable.  It is also indexable (see above).
    */
   @NonNull
-  @Column(length = 1024, name = "name", nullable = false, updatable = true)
+  @Column(length = 1024, nullable = false, updatable = true)
   private String name;
 
 
   /**
    * User phone number is nullable, indexed (see above) and updateable.
    **/
-  @Column(name = "phoneNumber", nullable = true, updatable = true)
+  @Column(nullable = true, updatable = true)
   private long phoneNumber;
 
 
   /**
    * User email is nullable, updateable and indexed (see above).
    **/
-  @Column(length = 1024, name = "email", nullable = true, updatable = true)
+  @Column(length = 1024, nullable = true, updatable = true)
   private String email;
+
+  @Column(length = 50, nullable = false, updatable = false, unique = true)
+  private String oauthKey;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "agency_id", nullable = true, updatable = true)
+  @JsonSerialize(as = FlatAgency.class)
+  private Agency agency;
+
+  @Column(nullable = true, updatable = true)
+  private Integer familyUnitNumber;
 
 
   /**
    * Spring looks for the class that matches this Autowired property and injects it automatically
    * into the application context.  @Autowired must be set for Spring to recognize it.
    **/
+  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Autowired
   private void setEntityLinks(EntityLinks entityLinks) {
     User.entityLinks = entityLinks;
@@ -114,6 +132,30 @@ public class User implements FlatUser {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getOauthKey() {
+    return oauthKey;
+  }
+
+  public void setOauthKey(String oauthKey) {
+    this.oauthKey = oauthKey;
+  }
+
+  public Agency getAgency() {
+    return agency;
+  }
+
+  public void setAgency(Agency agency) {
+    this.agency = agency;
+  }
+
+  public Integer getFamilyUnitNumber() {
+    return familyUnitNumber;
+  }
+
+  public void setFamilyUnitNumber(Integer familyUnitNumber) {
+    this.familyUnitNumber = familyUnitNumber;
   }
 
   @Override

@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.springframework.lang.NonNull;
 
 /** Interface for Jackson / Spring created **/
-@JsonPropertyOrder({"id", "name"})
+@JsonPropertyOrder({"id", "name", "href"})
  public interface FlatUser {
 
   @NonNull

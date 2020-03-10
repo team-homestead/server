@@ -13,6 +13,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
     Iterable<User> getAllByNameContainsOrderByNameAsc (String fragment);
 
+    Iterable<User> getAllByOrderByName ();
+
     default User findOrFail (UUID id){
       return findById(id).get();
     }

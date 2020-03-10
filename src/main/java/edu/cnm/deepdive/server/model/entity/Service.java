@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.server.model.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import edu.cnm.deepdive.server.view.FlatAgency;
 import edu.cnm.deepdive.server.view.FlatService;
 import java.net.URI;
 import java.util.List;
@@ -33,6 +34,7 @@ import org.springframework.stereotype.Component;
 /**
  * Establishing entity model.
  **/
+@SuppressWarnings("JpaDataSourceORMInspection")
 @Component
 @Entity
 @Table
@@ -56,25 +58,27 @@ public class Service implements FlatService {
   @Id
   @GeneratedValue(generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  @Column(name = "serviceId", columnDefinition = "CHAR(16) FOR BIT DATA",
+  @Column(name = "service_id", columnDefinition = "CHAR(16) FOR BIT DATA",
       nullable = false, updatable = false)
   private UUID id;
 
-   @Enumerated(EnumType.ORDINAL)
-   private ServiceType serviceType;
+  @Enumerated(EnumType.ORDINAL)
+  private ServiceType serviceType;
 
 
-  @ManyToOne(fetch = FetchType.EAGER,
-      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinColumn(name = "agencyId")
-  @JsonSerialize(contentAs = FlatService.class)
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "agency_id")
+  @JsonSerialize(as = FlatAgency.class)
   private Agency agency;
+
+  private String notes;
 
 
   /**
    * Spring looks for the class that matches this Autowired property and injects it automatically
    * into the application context.  @Autowired must be set for Spring to recognize it.
    **/
+  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Autowired
   private void setEntityLinks(EntityLinks entityLinks) {
     Service.entityLinks = entityLinks;
@@ -90,16 +94,15 @@ public class Service implements FlatService {
 
   public ServiceType getServiceType() {
     return serviceType;
- }
+  }
 
-//public void setServiceType(ServiceType serviceType) {
-//this.serviceType = serviceType;
-//}
+  public void setServiceType(ServiceType serviceType) {
+    this.serviceType = serviceType;
+  }
 
   /**
    * Entity Setters and Getters.  Updateable fields have setters.
    **/
-
 
 
   @Override
@@ -108,14 +111,13 @@ public class Service implements FlatService {
   }
 
   @Override
-  public String getName() {
-    return null;
+  public String getNotes() {
+    return notes;
   }
 
-  public void setId(@NonNull UUID id) {
-    this.id = id;
+  public void setNotes(String notes) {
+    this.notes = notes;
   }
-
 
   @Override
   public URI getHref() {
