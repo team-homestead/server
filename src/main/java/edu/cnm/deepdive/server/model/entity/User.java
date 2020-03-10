@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
     name = "user_profile",
     indexes = {
         @Index(columnList = "name"),
-        @Index(columnList = "phone_number"),
+        @Index(columnList = "phoneNumber"),
         @Index(columnList = "email"),
     }
 )
@@ -48,7 +48,7 @@ public class User implements FlatUser {
   @Id
   @GeneratedValue(generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  @Column(name = "user_id", columnDefinition = "CHAR(16) FOR BIT DATA",
+  @Column(name = "userId", columnDefinition = "CHAR(16) FOR BIT DATA",
       nullable = false, updatable = false)
   private UUID id;
 
@@ -63,7 +63,7 @@ public class User implements FlatUser {
   /**
    * User phone number is nullable, indexed (see above) and updateable.
    **/
-  @Column(name = "phone_number", nullable = true, updatable = true)
+  @Column(name = "phoneNumber", nullable = true, updatable = true)
   private long phoneNumber;
 
 
@@ -73,9 +73,6 @@ public class User implements FlatUser {
   @Column(length = 1024, name = "email", nullable = true, updatable = true)
   private String email;
 
-  public static EntityLinks getEntityLinks() {
-    return entityLinks;
-  }
 
   /**
    * Spring looks for the class that matches this Autowired property and injects it automatically

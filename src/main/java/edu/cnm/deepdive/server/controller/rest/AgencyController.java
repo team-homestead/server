@@ -55,4 +55,5 @@ public class AgencyController {
     agency.setAgencyType(updated.getAgencyType());
     return agencyRepository.save(agency);
   }
+
 }

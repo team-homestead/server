@@ -7,7 +7,7 @@ import org.springframework.lang.NonNull;
 
 
 /** Interface for Jackson / Spring created **/
-@JsonPropertyOrder({"id", "name"})
+@JsonPropertyOrder({"id", "name", "href", "serviceType"})
 public interface FlatService {
 
   @NonNull
@@ -16,6 +16,7 @@ public interface FlatService {
   @NonNull
   String getName();
 
+  @NonNull
   URI getHref();
 
 }

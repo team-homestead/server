@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
 @Table(
     name = "Individual",
     indexes = {
-        @Index(columnList = "family_unit_number"),
+        @Index(columnList = "familyUnitNumber"),
     }
 )
 
@@ -54,13 +54,13 @@ public class Individual implements FlatIndividual {
   @Id
   @GeneratedValue(generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  @Column(name = "individual_id", columnDefinition = "CHAR(16) FOR BIT DATA",
+  @Column(name = "individualId", columnDefinition = "CHAR(16) FOR BIT DATA",
       nullable = false, updatable = false)
   private UUID id;
 
   @OneToOne(fetch = FetchType.EAGER,
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "userId")
   @JsonSerialize(contentAs = FlatUser.class)
   private User user;
 
@@ -69,16 +69,8 @@ public class Individual implements FlatIndividual {
    * Family unit number is non-nullable, and updateable.
    */
   @NonNull
-  @Column(name = "family_unit_number", nullable = false, updatable = true)
-  private int fun;
-
-
-  /**
-   * Creation of interface (EntityLinks) pointing model to resources.
-   **/
-  public static EntityLinks getEntityLinks() {
-    return entityLinks;
-  }
+  @Column(name = "familyUnitNumber", nullable = false, updatable = true)
+  private int familyUnitNumber;
 
   /**
    * Spring looks for the class that matches this Autowired property and injects it automatically
@@ -106,12 +98,12 @@ public class Individual implements FlatIndividual {
     return null;
   }
 
-  public int getFun() {
-    return fun;
+  public int getFamilyUnitNumber() {
+    return familyUnitNumber;
   }
 
-  public void setFun(int fun) {
-    this.fun = fun;
+  public void setFamilyUnitNumber(int familyUnitNumber) {
+    this.familyUnitNumber = familyUnitNumber;
   }
 
   @Override

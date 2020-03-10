@@ -56,25 +56,20 @@ public class Service implements FlatService {
   @Id
   @GeneratedValue(generator = "uuid2")
   @GenericGenerator(name = "uuid2", strategy = "uuid2")
-  @Column(name = "service_id", columnDefinition = "CHAR(16) FOR BIT DATA",
+  @Column(name = "serviceId", columnDefinition = "CHAR(16) FOR BIT DATA",
       nullable = false, updatable = false)
   private UUID id;
 
    @Enumerated(EnumType.ORDINAL)
-   @Column
    private ServiceType serviceType;
 
 
   @ManyToOne(fetch = FetchType.EAGER,
       cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinColumn(name = "agency_id")
+  @JoinColumn(name = "agencyId")
   @JsonSerialize(contentAs = FlatService.class)
   private Agency agency;
 
-
-  public static EntityLinks getEntityLinks() {
-    return entityLinks;
-  }
 
   /**
    * Spring looks for the class that matches this Autowired property and injects it automatically
