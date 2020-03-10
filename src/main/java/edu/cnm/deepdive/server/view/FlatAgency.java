@@ -11,11 +11,21 @@ import org.springframework.lang.NonNull;
 @JsonPropertyOrder({"id", "agency_type", "href"})
 public interface FlatAgency {
 
-@NonNull
+  /**
+   * Returns or updates agency id that is non-nullable.
+   * @return id
+   */
+  @NonNull
 UUID getId();
 
-@NonNull
+  /**
+   * Returns or updates heref that is non-nullable.
+   * @return href
+   */
+  @NonNull
 URI getHref();
+
+
 
 }
 

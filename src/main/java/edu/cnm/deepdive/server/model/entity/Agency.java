@@ -80,7 +80,7 @@ public class Agency implements FlatAgency {
   /**
    * Getters and Setters for entity fields.  All fields have getters and
    * updatable fields have setters.
-   * @return
+   * @return agency id.
    */
   @NonNull
   public UUID getId() {
@@ -99,6 +99,10 @@ public class Agency implements FlatAgency {
     return users;
   }
 
+  /**
+   * Getter that returns list of services.
+   * @return list of services
+   */
   @NonNull
   public List<Service> getServices() {
     return services;

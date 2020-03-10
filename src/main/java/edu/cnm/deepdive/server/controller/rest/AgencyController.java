@@ -73,15 +73,19 @@ public class AgencyController {
    * @param id
    * @param updated
    * @return Agency with id
-   */
+
   @PutMapping(value = "/{id}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Agency put(@PathVariable UUID id, @RequestBody Agency updated) {
     Agency agency = get(id);
     agency.setAgencyType(updated.getAgencyType());
     return agencyRepository.save(agency);
-  }
+  } **/
 
+  /**
+   * Controller command to map HTTP DELETE requests using id.
+   * @param id
+   */
   @DeleteMapping(value = "/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable UUID id) {

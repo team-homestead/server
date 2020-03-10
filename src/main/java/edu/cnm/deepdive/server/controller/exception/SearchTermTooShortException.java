@@ -1,5 +1,8 @@
 package edu.cnm.deepdive.server.controller.exception;
 
+/**
+ * Throws an exception if the search term is too short.  It extends the illegal argument exception.
+ */
 public class SearchTermTooShortException extends IllegalArgumentException {
 
   public SearchTermTooShortException() {
