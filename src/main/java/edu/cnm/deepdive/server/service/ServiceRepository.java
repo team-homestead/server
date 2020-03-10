@@ -9,13 +9,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ServiceRepository extends JpaRepository<Service, UUID> {
 
 
-  /** Iterations by id and service category.**/
-  Iterable<Service> getAllByIdOrderByIdDesc(UUID id);
+  /**
+   * Iterations by id and service category.
+   **/
+  Iterable<Service> findAllById(UUID id);
 
-  //Iterable<Service> findAllByServiceTypeContainsOrderByServiceTypeAsc (ServiceType serviceType);
+  Iterable<Service> findAllByServiceType(ServiceType serviceType);
 
 
-  default Service findOrFail (UUID id) {
+  default Service findOrFail(UUID id) {
     return findById(id).get();
   }
+
 }

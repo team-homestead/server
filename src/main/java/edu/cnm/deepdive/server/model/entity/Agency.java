@@ -64,6 +64,7 @@ public class Agency implements FlatAgency {
   @JsonSerialize(contentAs = FlatUser.class)
   private List<User> users = new LinkedList<>();
 
+
   @NonNull
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "agency",
       cascade = CascadeType.ALL)

@@ -9,14 +9,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
     /** Iterations by id and name.**/
-    Iterable<User> getAllByIdOrderByIdDesc(UUID id);
+    Iterable<User> findAllById(UUID id);
 
-    Iterable<User> getAllByNameContainsOrderByNameAsc (String fragment);
-
-    Iterable<User> getAllByOrderByName ();
+    Iterable<User> findAllByName (String fragment);
 
     default User findOrFail (UUID id){
       return findById(id).get();
     }
+
   }
 

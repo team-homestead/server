@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.server.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import edu.cnm.deepdive.server.view.FlatAgency;
 import edu.cnm.deepdive.server.view.FlatUser;
@@ -70,7 +71,7 @@ public class User implements FlatUser {
    * User phone number is nullable, indexed (see above) and updateable.
    **/
   @Column(nullable = true, updatable = true)
-  private long phoneNumber;
+  private String phoneNumber;
 
 
   /**
@@ -104,12 +105,12 @@ public class User implements FlatUser {
   /**
    * Entity Setters and Getters.  Updateable fields have setters.
    **/
-  @NonNull
+  @Override
   public UUID getId() {
     return id;
   }
 
-  @NonNull
+  @Override
   public String getName() {
     return name;
   }
@@ -118,14 +119,16 @@ public class User implements FlatUser {
     this.name = name;
   }
 
-  public long getPhoneNumber() {
+  @Override
+  public String getPhoneNumber() {
     return phoneNumber;
   }
 
-  public void setPhoneNumber(long phoneNumber) {
+  public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
   }
 
+  @Override
   public String getEmail() {
     return email;
   }
@@ -133,7 +136,7 @@ public class User implements FlatUser {
   public void setEmail(String email) {
     this.email = email;
   }
-
+  
   public String getOauthKey() {
     return oauthKey;
   }
@@ -150,6 +153,7 @@ public class User implements FlatUser {
     this.agency = agency;
   }
 
+  @Override
   public Integer getFamilyUnitNumber() {
     return familyUnitNumber;
   }
@@ -173,5 +177,8 @@ public class User implements FlatUser {
     entityLinks.toString();
   }
 
+  public void setUser(UUID id) {
+
+  }
 }
 
