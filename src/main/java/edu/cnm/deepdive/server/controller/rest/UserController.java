@@ -28,12 +28,18 @@ public class UserController {
   /**
    * Spring looks for the class that matches this Autowired property and injects it automatically
    * into the application context.  @Autowired must be set for Spring to recognize it.
-   **/
+   * @param userRepository
+   */
   @Autowired
   public UserController(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
-  /** Controller command allowing posting of User data to database.**/
+
+  /**
+   * Controller command allowing posting of User data to database.
+   * @param user
+   * @return User
+   */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<User> post(@RequestBody User user) {
@@ -41,11 +47,20 @@ public class UserController {
     return ResponseEntity.created(user.getHref()).body(user);
   }
 
+  /**
+   * Controller command allows mapping HTTP requests to retrieve User by name.
+   * @return single User.
+   */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public Iterable<User> get() {
     return userRepository.getAllByOrderByName();
   }
 
+  /**
+   * Controller command allows mapping HTTP requests to retrieve User by id.
+   * @param id
+   * @return single User.
+   */
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public User get(@PathVariable UUID id) {
     return userRepository.findOrFail(id);
