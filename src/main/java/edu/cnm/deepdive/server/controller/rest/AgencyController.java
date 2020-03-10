@@ -1,10 +1,9 @@
 package edu.cnm.deepdive.server.controller.rest;
 
-import edu.cnm.deepdive.server.controller.exception.SearchTermTooShortException;
 import edu.cnm.deepdive.server.model.entity.Agency;
-import edu.cnm.deepdive.server.model.entity.Agency.AgencyType;
-import edu.cnm.deepdive.server.model.entity.User;
+import edu.cnm.deepdive.server.model.entity.Service;
 import edu.cnm.deepdive.server.service.AgencyRepository;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,23 +19,38 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Establishing controller for Agency entity.
+ */
 @Component
 @RestController
 @RequestMapping("/agencies")
 @ExposesResourceFor(Agency.class)
 public class AgencyController {
 
+  /**
+   * Agency repository declared to allow controller/repository relationship.
+   */
   private final AgencyRepository agencyRepository;
 
+  /**
+   * Spring looks for the class that matches this Autowired property and injects it automatically
+   * into the application context. @Autowired must be set for Spring to recognize it.
+   * @param agencyRepository
+   */
   @Autowired
   public AgencyController(AgencyRepository agencyRepository) {
     this.agencyRepository = agencyRepository;
   }
 
+  /**
+   * Controller command allowing posting of Agency data to database.
+   * @param agency
+   * @return Agency
+   */
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Agency> post(@RequestBody Agency agency) {
@@ -44,10 +58,21 @@ public class AgencyController {
     return ResponseEntity.created(agency.getHref()).body(agency);
   }
 
+  /**
+   * Controller command allowing retrieval of Agency data from database using id.
+   * @param id
+   * @return single Agency
+   */
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Agency get(@PathVariable UUID id) {
     return agencyRepository.findById(id).get();
   }
+
+  /**
+   * Controller command allowing mapping HHTP PUT requests in Agency using id.
+   * @param id
+   * @param updated
+   * @return Agency with id
 
   @PutMapping(value = "/{id}",
       consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,6 +80,21 @@ public class AgencyController {
     Agency agency = get(id);
     agency.setAgencyType(updated.getAgencyType());
     return agencyRepository.save(agency);
+  } **/
+
+  /**
+   * Controller command to map HTTP DELETE requests using id.
+   * @param id
+   */
+  @DeleteMapping(value = "/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable UUID id) {
+    agencyRepository.findById(id).ifPresent((agency) -> {
+      List<Service> services = agency.getServices();
+      services.forEach((service) -> service.setAgency(null));
+      services.clear();
+      agencyRepository.delete(agency);
+    });
   }
 
 
