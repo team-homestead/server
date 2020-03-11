@@ -134,6 +134,14 @@ public class Service implements FlatService {
     entityLinks.toString();
   }
 
+  public List<Service> getServices() {
+    return getServices();
+  }
+
+  public void setService(Object o) {
+
+  }
+
   public enum ServiceType {
     FOOD,
     SHELTER,

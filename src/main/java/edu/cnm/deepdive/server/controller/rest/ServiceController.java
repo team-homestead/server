@@ -1,21 +1,26 @@
 package edu.cnm.deepdive.server.controller.rest;
 
+import edu.cnm.deepdive.server.model.entity.Agency;
 import edu.cnm.deepdive.server.model.entity.Service;
 import edu.cnm.deepdive.server.model.entity.Service.ServiceType;
 import edu.cnm.deepdive.server.model.entity.User;
 import edu.cnm.deepdive.server.service.ServiceRepository;
 import edu.cnm.deepdive.server.service.UserRepository;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.ExposesResourceFor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /** Establishing controller for Service entity.  **/
@@ -45,16 +50,23 @@ public class ServiceController {
     return ResponseEntity.created(service.getHref()).body(service);
   }
 
+  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Service get(@PathVariable UUID id) {
+    return serviceRepository.findById(id).get();
+  }
 
 
 
-
-
-
-
-
-
-
+  @DeleteMapping(value = "/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable UUID id) {
+    serviceRepository.findById(id).ifPresent((service) -> {
+      List<Service> services = service.getServices();
+      services.forEach((service1) -> service.setService(null));
+      services.clear();
+      serviceRepository.delete(service);
+    });
+  }
 }
 
 
