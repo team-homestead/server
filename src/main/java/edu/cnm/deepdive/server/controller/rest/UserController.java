@@ -56,34 +56,23 @@ public class UserController {
   }
 
 
-
-  /**  Controller command allowing get name from User data from the database.
+  /**
+   *  Controller command allowing get name from User data from the database.
+   */
   @GetMapping(value = "/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public User get(@PathVariable String name) {
-    return (User) userRepository.getAllByName(name);
+    return (User) userRepository.findAllByName(name);
   }
-  **/
 
 
-  /**  Controller command allowing update of User name in the database.
-  @PutMapping(value = "/{name}",
-      consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public User put(@PathVariable String name, @RequestBody User updated) {
-    User user = get(name);
-    user.setUser(updated.getId());
-    return userRepository.save(user);
-  }
-  **/
-
-
-
-  /**  Controller command allowing deletion of User from the database.
+  /**
+   *  Controller command allowing deletion of User from the database.
+   */
   @DeleteMapping(value = "/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable UUID id) {
     userRepository.findById(id).ifPresent(userRepository::delete);
   }
-  **/
 
 }
 
