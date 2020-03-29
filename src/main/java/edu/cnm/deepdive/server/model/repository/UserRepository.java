@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.server.service;
+package edu.cnm.deepdive.server.model.repository;
 
 
 import edu.cnm.deepdive.server.model.entity.Agency;

@@ -1,11 +1,7 @@
 package edu.cnm.deepdive.server.controller.rest;
 
-import edu.cnm.deepdive.server.model.entity.Agency;
 import edu.cnm.deepdive.server.model.entity.Service;
-import edu.cnm.deepdive.server.model.entity.Service.ServiceType;
-import edu.cnm.deepdive.server.model.entity.User;
-import edu.cnm.deepdive.server.service.ServiceRepository;
-import edu.cnm.deepdive.server.service.UserRepository;
+import edu.cnm.deepdive.server.model.repository.ServiceRepository;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
