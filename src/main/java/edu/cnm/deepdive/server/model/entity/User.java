@@ -180,5 +180,9 @@ public class User implements FlatUser {
   public void setUser(UUID id) {
 
   }
+
+  public void setDisplayName(String displayName) {
+  }
+
 }
 

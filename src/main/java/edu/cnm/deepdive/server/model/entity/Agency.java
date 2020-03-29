@@ -52,6 +52,8 @@ public class Agency implements FlatAgency {
   @Column(name = "agency_id", columnDefinition = "CHAR(16) FOR BIT DATA",
       nullable = false, updatable = false)
   private UUID id;
+  private String name;
+
 
   /**
    * Establishing Agency type enum.

@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.server.service;
+package edu.cnm.deepdive.server.model.repository;
 
 import edu.cnm.deepdive.server.model.entity.Agency;
 import edu.cnm.deepdive.server.model.entity.Agency.AgencyType;
@@ -11,9 +11,9 @@ public interface AgencyRepository extends JpaRepository<Agency, UUID> {
    * Iterations by id and agency type.
    * @return id
    */
-  Iterable<Agency> findAllByOrderById();
-
   Iterable<Agency> findAllByIdContainsOrderById(UUID id);
+
+  Iterable<Agency> findAllByNameContainsOrderByName(String fragment);
 
   Iterable<Agency> findAllByAgencyTypeOrderByAgencyType(AgencyType agencyType);
 
