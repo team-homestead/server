@@ -92,6 +92,7 @@ public class Service implements FlatService {
     this.agency = agency;
   }
 
+  @Override
   public ServiceType getServiceType() {
     return serviceType;
   }
@@ -110,7 +111,6 @@ public class Service implements FlatService {
     return null;
   }
 
-  @Override
   public String getNotes() {
     return notes;
   }

@@ -16,9 +16,6 @@ public interface FlatService {
   UUID getId();
 
   @NonNull
-  String getNotes();
-
-  @NonNull
   ServiceType getServiceType();
 
   @NonNull

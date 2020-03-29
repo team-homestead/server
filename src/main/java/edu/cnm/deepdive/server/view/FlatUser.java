@@ -40,12 +40,6 @@ public interface FlatUser {
 
  /**
   *
-  * @param email
-  */
- void setEmail(String email);
-
- /**
-  *
   * @return
   */
  Integer getFamilyUnitNumber();

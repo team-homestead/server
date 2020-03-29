@@ -87,6 +87,7 @@ public class Agency implements FlatAgency {
     return id;
   }
 
+  @Override
   public AgencyType getAgencyType() {
     return agencyType;
   }

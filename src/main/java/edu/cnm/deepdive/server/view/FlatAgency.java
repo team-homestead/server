@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.server.view;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import edu.cnm.deepdive.server.model.entity.Agency.AgencyType;
 import java.net.URI;
 import java.util.UUID;
 import org.springframework.lang.NonNull;
@@ -13,18 +14,22 @@ public interface FlatAgency {
 
   /**
    * Returns or updates agency id that is non-nullable.
+   *
    * @return id
    */
   @NonNull
-UUID getId();
+  UUID getId();
 
   /**
    * Returns or updates heref that is non-nullable.
+   *
    * @return href
    */
   @NonNull
-URI getHref();
+  URI getHref();
 
+
+  AgencyType getAgencyType();
 
 
 }
