@@ -12,9 +12,9 @@ public interface ServiceRepository extends JpaRepository<Service, UUID> {
   /**
    * Iterations by id and service category.
    **/
-  Iterable<Service> findAllById(UUID id);
+  Iterable<Service> findAllById();
 
-  Iterable<Service> findAllByServiceType(ServiceType serviceType);
+  Iterable<Service> findAllByServiceType();
 
 
   default Service findOrFail(UUID id) {

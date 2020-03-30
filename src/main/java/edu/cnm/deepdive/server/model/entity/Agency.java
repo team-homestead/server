@@ -109,6 +109,8 @@ public class Agency implements FlatAgency {
     return services;
   }
 
+  public void  setServices(Service service) { this.services = services; }
+
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Autowired
   private void setEntityLinks(EntityLinks entityLinks) {
