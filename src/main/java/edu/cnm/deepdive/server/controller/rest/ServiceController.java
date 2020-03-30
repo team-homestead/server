@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.server.controller.rest;
 
+import edu.cnm.deepdive.server.model.entity.Agency;
 import edu.cnm.deepdive.server.model.entity.Service;
 import edu.cnm.deepdive.server.model.repository.ServiceRepository;
 import java.util.List;
@@ -51,15 +52,17 @@ public class ServiceController {
     return serviceRepository.findById(id).get();
   }
 
-
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<Service> get() {
+    return serviceRepository.findAll();
+  }
 
   @DeleteMapping(value = "/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable UUID id) {
     serviceRepository.findById(id).ifPresent((service) -> {
-      List<Service> services = service.getServices();
-      services.forEach((service1) -> service.setService(null));
-      services.clear();
+      List<Agency> agencies = service.getAgencies();
+      agencies.forEach((agency) -> agency.getServices().remove(service)); // TODO Check service.equals implementation
       serviceRepository.delete(service);
     });
   }

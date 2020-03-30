@@ -12,13 +12,13 @@ import java.util.Set;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class ServiceEntityService {
+public class ServiceService {
 
   private final AgencyRepository agencyRepository;
   private final ServiceRepository serviceRepository;
 
   @Autowired
-  public ServiceEntityService(AgencyRepository agencyRepository, ServiceRepository serviceRepository) {
+  public ServiceService(AgencyRepository agencyRepository, ServiceRepository serviceRepository) {
     this.agencyRepository = agencyRepository;
     this.serviceRepository = serviceRepository;
   }
@@ -27,23 +27,5 @@ public class ServiceEntityService {
     return serviceRepository.save(service);
   }
 
-  public Iterable<Service> readAll(boolean includeNull, boolean includeEmpty) {
-    Iterable<Service> raw = includeEmpty
-        ? serviceRepository.findAllByServiceType()
-        : serviceRepository.findAllByAgency();
-    if (includeNull) {
-      List<Service> services = new LinkedList<>();
-      for (Service service : raw) {
-        services.add(service);
-      }
-      return services;
-    } else {
-      return raw;
-    }
-  }
-
-  public void delete(ServiceType serviceType) {
-    serviceRepository.findAllByServiceType();
-  }
 
 }

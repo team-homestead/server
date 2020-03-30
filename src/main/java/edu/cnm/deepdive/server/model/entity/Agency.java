@@ -19,6 +19,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import org.hibernate.annotations.GenericGenerator;
@@ -74,8 +77,9 @@ public class Agency implements FlatAgency {
    * Establishing one to many relationship between Agency and Services.
    */
   @NonNull
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "agency",
-      cascade = CascadeType.ALL)
+  @ManyToMany(fetch = FetchType.LAZY,
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @JoinTable(joinColumns = @JoinColumn(name = "agency_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
   @JsonSerialize(contentAs = FlatService.class)
   private List<Service> services = new LinkedList<>();
 
@@ -111,7 +115,6 @@ public class Agency implements FlatAgency {
     return services;
   }
 
-  public void  setServices(Service service) { this.services = services; }
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Autowired

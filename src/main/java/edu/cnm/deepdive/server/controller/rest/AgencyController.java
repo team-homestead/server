@@ -3,6 +3,8 @@ package edu.cnm.deepdive.server.controller.rest;
 import edu.cnm.deepdive.server.model.entity.Agency;
 import edu.cnm.deepdive.server.model.entity.Service;
 import edu.cnm.deepdive.server.model.repository.AgencyRepository;
+import edu.cnm.deepdive.server.model.repository.ServiceRepository;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +35,19 @@ public class AgencyController {
    * Agency repository declared to allow controller/repository relationship.
    */
   private final AgencyRepository agencyRepository;
+  private final ServiceRepository serviceRepository;
 
   /**
    * Spring looks for the class that matches this Autowired property and injects it automatically
    * into the application context. @Autowired must be set for Spring to recognize it.
    * @param agencyRepository
+   * @param serviceRepository
    */
   @Autowired
-  public AgencyController(AgencyRepository agencyRepository) {
+  public AgencyController(AgencyRepository agencyRepository,
+      ServiceRepository serviceRepository) {
     this.agencyRepository = agencyRepository;
+    this.serviceRepository = serviceRepository;
   }
 
   /**
@@ -52,6 +58,12 @@ public class AgencyController {
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Agency> post(@RequestBody Agency agency) {
+    List<Service> services = new LinkedList<>();
+    for (Service service : agency.getServices()) {
+      services.add(serviceRepository.getOne(service.getId()));
+    }
+    agency.getServices().clear();
+    agency.getServices().addAll(services);
     agencyRepository.save(agency);
     return ResponseEntity.created(agency.getHref()).body(agency);
   }
@@ -88,11 +100,13 @@ public class AgencyController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable UUID id) {
     agencyRepository.findById(id).ifPresent((agency) -> {
-      List<Service> services = agency.getServices();
-      services.forEach((service) -> service.setAgency(null));
-      services.clear();
-      agencyRepository.delete(agency);
+       agencyRepository.delete(agency);
     });
+  }
+
+  @GetMapping(value = "/by-services", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<Agency> searchByService(@RequestBody List<Service> services) {
+    return agencyRepository.findIfSubsetOfServicesExists(services);
   }
 
 

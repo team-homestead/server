@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import edu.cnm.deepdive.server.view.FlatAgency;
 import edu.cnm.deepdive.server.view.FlatService;
 import java.net.URI;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -19,6 +20,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
@@ -62,14 +65,15 @@ public class Service implements FlatService {
       nullable = false, updatable = false)
   private UUID id;
 
+
   @Enumerated(EnumType.ORDINAL)
   private ServiceType serviceType;
 
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "agency_id")
-  @JsonSerialize(as = FlatAgency.class)
-  private Agency agency;
+  @ManyToMany(fetch = FetchType.EAGER, mappedBy = "services",
+      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @JsonSerialize(contentAs = FlatAgency.class)
+  private List<Agency> agencies = new LinkedList<>();
 
   private String notes;
 
@@ -84,12 +88,8 @@ public class Service implements FlatService {
     Service.entityLinks = entityLinks;
   }
 
-  public Agency getAgency() {
-    return agency;
-  }
-
-  public void setAgency(Agency agency) {
-    this.agency = agency;
+  public List<Agency> getAgencies() {
+    return agencies;
   }
 
   @Override
@@ -108,7 +108,7 @@ public class Service implements FlatService {
 
   @Override
   public UUID getId() {
-    return null;
+    return id;
   }
 
   public String getNotes() {
@@ -134,13 +134,6 @@ public class Service implements FlatService {
     entityLinks.toString();
   }
 
-  public List<Service> getServices() {
-    return getServices();
-  }
-
-  public void setService(Object o) {
-
-  }
 
   public enum ServiceType {
     FOOD,

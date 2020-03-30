@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserEntityService {
+public class UserService {
 
   private final UserRepository userRepository;
 
 
   @Autowired
-  public UserEntityService(UserRepository userRepository) {
+  public UserService(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
 
