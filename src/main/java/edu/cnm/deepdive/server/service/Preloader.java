@@ -3,7 +3,6 @@ package edu.cnm.deepdive.server.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.cnm.deepdive.server.model.entity.Agency;
 import edu.cnm.deepdive.server.model.entity.Service;
-import edu.cnm.deepdive.server.model.entity.Service.ServiceType;
 import edu.cnm.deepdive.server.model.repository.AgencyRepository;
 import edu.cnm.deepdive.server.model.repository.ServiceRepository;
 import java.io.InputStream;
@@ -13,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Profile("preload")
@@ -27,7 +27,6 @@ public class Preloader implements CommandLineRunner {
     this.agencyRepository = agencyRepository;
   }
 
-
   @Override
   public void run(String... args) throws Exception {
     List<Agency> agencies = new LinkedList<>();
@@ -36,9 +35,11 @@ public class Preloader implements CommandLineRunner {
       ObjectMapper mapper = new ObjectMapper();
       for (Agency agency : mapper.readValue(input, Agency[].class)){
         agencies.add(agency);
+        for (Service service : agency.getServices()) {
+          service.setAgency(agency);
+        }
       }
       agencyRepository.saveAll(agencies);
-
     }
   }
 }
