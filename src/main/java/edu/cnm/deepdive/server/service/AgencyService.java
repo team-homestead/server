@@ -1,7 +1,6 @@
 package edu.cnm.deepdive.server.service;
 
 import edu.cnm.deepdive.server.model.entity.Agency;
-import edu.cnm.deepdive.server.model.entity.Agency.AgencyType;
 import edu.cnm.deepdive.server.model.entity.Service;
 import edu.cnm.deepdive.server.model.entity.Service.ServiceType;
 import edu.cnm.deepdive.server.model.repository.AgencyRepository;
@@ -24,8 +23,8 @@ public class AgencyService {
     return agencyRepository.save(agency);
   }
 
-  public Iterable<Agency> readWithServiceFilter(List<Service> services) {
-    return agencyRepository.findIfSubsetOfServicesExists(services);
+  public Iterable<Agency> readWithServiceFilter(List<ServiceType> serviceTypes) {
+    return agencyRepository.findIfSubsetOfServicesExists(serviceTypes);
   }
 }
 

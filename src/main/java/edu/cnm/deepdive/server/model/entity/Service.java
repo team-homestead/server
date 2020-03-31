@@ -6,8 +6,6 @@ import edu.cnm.deepdive.server.view.FlatService;
 import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
@@ -18,18 +16,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -70,10 +62,10 @@ public class Service implements FlatService {
   private ServiceType serviceType;
 
 
-  @ManyToMany(fetch = FetchType.EAGER, mappedBy = "services",
-      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JsonSerialize(contentAs = FlatAgency.class)
-  private List<Agency> agencies = new LinkedList<>();
+  @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+  @JoinColumn(name = "agency_id")
+  @JsonSerialize(as = FlatAgency.class)
+  private Agency agency;
 
   private String notes;
 
@@ -88,11 +80,18 @@ public class Service implements FlatService {
     Service.entityLinks = entityLinks;
   }
 
-  public List<Agency> getAgencies() {
-    return agencies;
-  }
 
   @Override
+  @NonNull
+  public UUID getId() {
+    return id;
+  }
+
+
+  public void setId(@NonNull UUID id) {
+    this.id = id;
+  }
+
   public ServiceType getServiceType() {
     return serviceType;
   }
@@ -101,14 +100,12 @@ public class Service implements FlatService {
     this.serviceType = serviceType;
   }
 
-  /**
-   * Entity Setters and Getters.  Updateable fields have setters.
-   **/
+  public Agency getAgency() {
+    return agency;
+  }
 
-
-  @Override
-  public UUID getId() {
-    return id;
+  public void setAgency(Agency agency) {
+    this.agency = agency;
   }
 
   public String getNotes() {
@@ -123,6 +120,7 @@ public class Service implements FlatService {
   public URI getHref() {
     return entityLinks.linkForItemResource(Service.class, id).toUri();
   }
+
 
   /**
    * The PostConstruct annotation is used on a method that needs to be executed after dependency
@@ -139,7 +137,8 @@ public class Service implements FlatService {
     FOOD,
     SHELTER,
     CLOTHING,
-    SUPPLIES;
+    SUPPLIES,
+    EVENT;
   }
 
 }

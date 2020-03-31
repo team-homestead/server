@@ -1,15 +1,11 @@
 package edu.cnm.deepdive.server.service;
 
-import edu.cnm.deepdive.server.model.entity.Agency;
 import edu.cnm.deepdive.server.model.entity.Service;
 import edu.cnm.deepdive.server.model.entity.Service.ServiceType;
 import edu.cnm.deepdive.server.model.repository.AgencyRepository;
 import edu.cnm.deepdive.server.model.repository.ServiceRepository;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ServiceService {
@@ -23,8 +19,13 @@ public class ServiceService {
     this.serviceRepository = serviceRepository;
   }
 
-  public Service create(Service service) {
-    return serviceRepository.save(service);
+  public Service create(Service resource) {
+    return serviceRepository.save(resource);
+  }
+
+
+  public void delete(ServiceType serviceType) {
+    serviceRepository.deleteAll(serviceRepository.findAllByServiceType(serviceType));
   }
 
 

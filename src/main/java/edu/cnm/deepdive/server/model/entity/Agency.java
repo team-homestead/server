@@ -77,9 +77,9 @@ public class Agency implements FlatAgency {
    * Establishing one to many relationship between Agency and Services.
    */
   @NonNull
-  @ManyToMany(fetch = FetchType.LAZY,
-      cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinTable(joinColumns = @JoinColumn(name = "agency_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
+  @OneToMany(fetch = FetchType.LAZY,
+      mappedBy = "agency",
+      cascade = CascadeType.ALL)
   @JsonSerialize(contentAs = FlatService.class)
   private List<Service> services = new LinkedList<>();
 
@@ -107,14 +107,21 @@ public class Agency implements FlatAgency {
   }
 
   /**
-   * Getter that returns list of services.
-   * @return list of services
+   * Getter that returns list of resources.
+   * @return list of resources
    */
   @NonNull
   public List<Service> getServices() {
     return services;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Autowired

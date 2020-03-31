@@ -4,7 +4,7 @@ create table agency
     agency_type integer,
     primary key (agency_id)
 );
-create table service
+create table resource
 (
     service_id   CHAR(16) FOR BIT DATA not null,
     notes        varchar(255),
@@ -28,7 +28,7 @@ create index IDXjxt2h1iv42xrx0a2eenkj2jox on user_profile (phone_number);
 create index IDXtcks72p02h4dp13cbhxne17ad on user_profile (email);
 alter table user_profile
     add constraint UK_6f815wi5o4jq8p1q1w63o4mhd unique (oauth_key);
-alter table service
+alter table resource
     add constraint FKmrviynn7g21iivifn5qr31cyp foreign key (agency_id) references agency;
 alter table user_profile
     add constraint FKlv49shtr8g8j2aivkstvfdjh8 foreign key (agency_id) references agency

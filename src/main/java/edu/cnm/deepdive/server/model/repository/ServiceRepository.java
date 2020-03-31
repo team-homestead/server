@@ -2,7 +2,6 @@ package edu.cnm.deepdive.server.model.repository;
 
 
 import edu.cnm.deepdive.server.model.entity.Agency;
-import edu.cnm.deepdive.server.model.entity.Agency.AgencyType;
 import edu.cnm.deepdive.server.model.entity.Service;
 import edu.cnm.deepdive.server.model.entity.Service.ServiceType;
 import java.util.UUID;
@@ -16,7 +15,6 @@ public interface ServiceRepository extends JpaRepository<Service, UUID> {
    **/
   Iterable<Service> findAllByServiceType(ServiceType type);
 
-  Iterable<Service> findAllByAgenciesContainsOrderByServiceType(Agency agency);
 
   default Service findOrFail(UUID id) {
     return findById(id).get();

@@ -2,6 +2,7 @@ package edu.cnm.deepdive.server.controller.rest;
 
 import edu.cnm.deepdive.server.model.entity.Agency;
 import edu.cnm.deepdive.server.model.entity.Service;
+import edu.cnm.deepdive.server.model.entity.Service.ServiceType;
 import edu.cnm.deepdive.server.model.repository.ServiceRepository;
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,12 +59,15 @@ public class ServiceController {
     return serviceRepository.findAll();
   }
 
+  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<Service> search(@RequestParam ServiceType type){
+    return serviceRepository.findAllByServiceType(type);
+  }
+
   @DeleteMapping(value = "/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable UUID id) {
     serviceRepository.findById(id).ifPresent((service) -> {
-      List<Agency> agencies = service.getAgencies();
-      agencies.forEach((agency) -> agency.getServices().remove(service)); // TODO Check service.equals implementation
       serviceRepository.delete(service);
     });
   }

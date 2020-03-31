@@ -20,7 +20,7 @@ public class ControllerExceptionHandler {
    * Throws an exception if no resources are found.
    */
   @ExceptionHandler(NoSuchElementException.class)
-  @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Resource not found")
+  @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Service not found")
   public void notFound() {}
 
   /**

@@ -1,4 +1,29 @@
 [
-
-
+  {
+    "name": "Albuquerque Opportunity Center",
+    "services": [
+      {
+        "serviceType": "SHELTER",
+        "notes": "Men's Overnight Emergency Shelter has 71 beds and daytime storage of belongings for up to 30 days."
+      }
+    ]
+  },
+  {
+    "name": "Joy Junction",
+    "services": [
+      {
+        "serviceType": "SHELTER",
+        "notes": "Our faith-based church ministry serves as many as 300 individuals a night including as many as 60 to 80 children every day."
+      }
+    ]
+  },
+  {
+    "name": "The Rock at Noonday",
+    "services": [
+      {
+        "serviceType": "FOOD",
+        "notes": "Serves breakfast Monday-Thursday at 9am and lunch at 12pm."
+      }
+    ]
+  }
 ]
