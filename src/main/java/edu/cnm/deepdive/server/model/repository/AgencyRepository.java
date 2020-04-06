@@ -18,6 +18,19 @@ public interface AgencyRepository extends JpaRepository<Agency, UUID> {
       + "GROUP BY a\n"
       + "HAVING COUNT(s) >= (SELECT COUNT(s2) FROM Service AS s2 WHERE s2.serviceType IN (?1))";
 
+  String SERVICES_QUERY_SINGLE_SERVICE_TYPE = "SELECT a\n"
+      + "FROM Agency AS a\n"
+      + "         JOIN a.services AS s\n"
+      + "WHERE s.serviceType = ?1\n"
+      + "ORDER BY a.name";
+
+  String SERVICES_QUERY_NAME_AND_SINGLE_SERVICE_TYPE = "SELECT a\n"
+      + "FROM Agency AS a\n"
+      + "         JOIN a.services AS s\n"
+      + "WHERE s.serviceType = ?1\n"
+      + "    AND a.name LIKE %?2%"
+      + "ORDER BY a.name";
+
   /**
    * Iterations by id and agency type.
    * @return id
@@ -25,6 +38,12 @@ public interface AgencyRepository extends JpaRepository<Agency, UUID> {
   Iterable<Agency> findAllByIdContainsOrderById(UUID id);
 
   Iterable<Agency> findAllByNameContainsOrderByName(String fragment);
+
+  @Query(SERVICES_QUERY_SINGLE_SERVICE_TYPE)
+  Iterable<Agency> findAllByServiceTypeOrderByName(ServiceType type);
+
+  @Query(SERVICES_QUERY_NAME_AND_SINGLE_SERVICE_TYPE)
+  Iterable<Agency> findAllByNameContainsAndServiceTypeOrderByName(ServiceType type, String fragment);
 
   Iterable<Agency> findAllByAgencyTypeOrderByAgencyType(AgencyType agencyType);
 

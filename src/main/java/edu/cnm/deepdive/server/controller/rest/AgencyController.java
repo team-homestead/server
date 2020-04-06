@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -118,6 +119,22 @@ public class AgencyController {
   @GetMapping(value = "/by-services", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   public Iterable<Agency> searchByServiceTypes(@RequestBody List<ServiceType> serviceTypes) {
     return agencyRepository.findIfSubsetOfServicesExists(serviceTypes);
+  }
+
+  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Iterable<Agency> search(
+      @RequestParam(name = "q", required = false) String fragment,
+      @RequestParam(name = "service-type", required = false) String typeName) {
+    if (fragment != null && typeName != null) {
+      ServiceType type = ServiceType.valueOf(typeName);
+      return agencyRepository.findAllByNameContainsAndServiceTypeOrderByName(type, fragment);
+    } else if (typeName != null) {
+      ServiceType type = ServiceType.valueOf(typeName);
+      return agencyRepository.findAllByServiceTypeOrderByName(type);
+    } else if (fragment != null) {
+      return agencyRepository.findAllByNameContainsOrderByName(fragment);
+    }
+    throw new IllegalArgumentException();
   }
 
 }

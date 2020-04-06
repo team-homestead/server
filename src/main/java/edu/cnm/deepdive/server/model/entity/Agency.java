@@ -128,8 +128,7 @@ public class Agency implements FlatAgency {
   private void setEntityLinks(EntityLinks entityLinks) {
     Agency.entityLinks = entityLinks;
   }
-
-
+  
   @Override
   public URI getHref() {
     return entityLinks.linkForItemResource(Agency.class, id).toUri();
