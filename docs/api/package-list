@@ -1,0 +1,7 @@
+edu.cnm.deepdive.server
+edu.cnm.deepdive.server.controller.exception
+edu.cnm.deepdive.server.controller.rest
+edu.cnm.deepdive.server.model.entity
+edu.cnm.deepdive.server.model.repository
+edu.cnm.deepdive.server.service
+edu.cnm.deepdive.server.view
